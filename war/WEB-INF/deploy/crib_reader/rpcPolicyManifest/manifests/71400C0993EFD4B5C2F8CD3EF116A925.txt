@@ -1,0 +1,2 @@
+serviceClass: com.cakasky.crib.client.CribService
+path: 1842B15DB3E746C9E3C809489CA2BB1D.gwt.rpc

@@ -1,0 +1,105 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <!--                                                               -->
+    <!-- Consider inlining CSS to reduce the number of requested files -->
+    <!--                                                               -->
+    <link type="text/css" rel="stylesheet" href="Crib_Reader.css">
+
+    <!--                                           -->
+    <!-- Any title is fine                         -->
+    <!--                                           -->
+    <title>Crib Reader</title>
+    
+    <!--                                           -->
+    <!-- This script loads your compiled module.   -->
+    <!-- If you add any GWT meta tags, they must   -->
+    <!-- be added before this line.                -->
+    <!--                                           -->
+    <script type="text/javascript" language="javascript" src="crib_reader/crib_reader.nocache.js"></script>
+  </head>
+
+  <!--                                           -->
+  <!-- The body can have arbitrary html, or      -->
+  <!-- you can leave the body empty if you want  -->
+  <!-- to create a completely dynamic UI.        -->
+  <!--                                           -->
+  <body>
+	
+    <!-- OPTIONAL: include this if you want history support -->
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+
+    <h1>Crib Reader</h1>
+    <table id="itemTable" align="center">
+    <tr>
+        <td style="width: 134px; ">
+            <input id="bookItem" type="radio" name="Reader" value="Book" style="vertical-align: middle">Book
+            <input id="storyItem" type="radio" name="Reader" value="Story" style="vertical-align: middle">Story
+        </td>
+        <td style="width: 162px; "><input id="itemName" type="text" name="ItemName" style="height: 20px;" autocomplete="off"></td>
+        <td> <button type="button" id="addItem">Add</button> </td>
+    </tr>
+    
+</table>
+
+	<table align="center" style="width: 316px">
+		<tr>
+			<td style="width: 115px; ">
+				<b>Books</b><br></br>
+				<select id="bookItems" style="width: 100px;"></select>
+			</td>
+			<td>
+				<button id="bookLoad" type="button">Load</button>
+			</td>
+			
+			<td style="width: 115px; ">
+				<b>Stories</b><br></br>
+				<select id="storyItems" style="width: 100px; "></select>
+			</td>
+			<td>
+				<button id="storyLoad" type="button">Load</button>
+			</td>
+		</tr>
+	</table>
+<hr>
+
+<table align="center">
+	<tr>
+		<td class="cribNotes">
+			<b>Crib Notes</b><br></br>
+			<input id="cribName" type="text" name="CribName" style="height: 20px; width: 107px" autocomplete="off">
+			<button id="cribAdd" type="button" style="width: 24px; ">+</button>
+			<button id="cribRemove" type="button" style="width: 17px; height: 26px">-</button>
+			<br></br>
+			<select id="cribList" class="select" size="15" style="width: 177px; height: 356px">
+			</select>
+			
+			
+		</td>
+		<td id="contentData" style="width: 781px; ">
+			<div class="itemClass" id="itemLabel"></div>
+			<b>Content</b><br></br><textarea id="cribContent" cols="1" rows="400" style="height: 402px; width: 809px"></textarea>
+			<div class="itemClass"><br></br></div>
+			<div align="right"><button align="right" id="contentSave" class="button">Save</button></div>
+		</td>
+	</tr>
+</table>
+
+
+  </body>
+</html>

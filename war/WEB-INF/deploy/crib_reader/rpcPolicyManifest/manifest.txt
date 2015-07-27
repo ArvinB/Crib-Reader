@@ -1,0 +1,3 @@
+# Module crib_reader
+# RPC service class, partial path of RPC policy file
+com.cakasky.crib.client.CribService, 1842B15DB3E746C9E3C809489CA2BB1D.gwt.rpc
