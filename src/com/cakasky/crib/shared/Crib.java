@@ -38,6 +38,7 @@ public class Crib implements Serializable {
 
 	// Default Constructor
 	public Crib() {
+		cribContext = "";
 	}
 	
 	public String getCribName() {

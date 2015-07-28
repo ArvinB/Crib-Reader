@@ -58,4 +58,10 @@ public class CribServer extends RemoteServiceServlet implements CribService {
 		
 		ofy().save().entity(item).now();
 	}
+
+	@Override
+	public void updateItem(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
 }

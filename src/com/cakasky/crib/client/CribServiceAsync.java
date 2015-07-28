@@ -16,4 +16,5 @@ public interface CribServiceAsync {
 	void getBooks(AsyncCallback<List<Item>> callback);
 	void getStories(AsyncCallback<List<Item>> callback);
 	void putItem(Item item, AsyncCallback<Void> callback);
+	void updateItem(Item item, AsyncCallback<Void> callback);
 }

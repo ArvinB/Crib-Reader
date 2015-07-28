@@ -81,7 +81,10 @@ public class Crib_Reader implements EntryPoint {
 			}
 		});
 
-		cribContent.setText("");;
+		// Clear Text Boxes upon onLoad
+		itemName.setText("");
+		cribName.setText("");
+		cribContent.setText("");
 		
 		// Set the default Radio Button to a Book Item
 		bookItem.setValue(true);
@@ -147,9 +150,17 @@ public class Crib_Reader implements EntryPoint {
 				int selectedIndex;
 				String selectedItemName;
 				
-				final Item activeItem = items.getActiveItem();
+				Item activeItem = items.getActiveItem();
+				Crib activeCrib = items.getActiveCrib();
+				
 				if (activeItem != null) {
-					items.saveActiveCribContent(cribContent.getText());
+					
+					// TODO Update Existing Item
+					// Save Active Crib before Loading
+					if ( activeCrib != null ) {
+						activeCrib.setCribContext(cribContent.getText());	
+					}
+					
 					cribServer.putItem(activeItem, new AsyncCallback<Void>() {
 						
 						public void onFailure(Throwable caught) {}
@@ -207,7 +218,9 @@ public class Crib_Reader implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				
-				final Item activeItem = items.getActiveItem();
+				Item activeItem = items.getActiveItem();
+				Crib activeCrib = items.getActiveCrib();
+				
 				if (activeItem == null) {
 					
 					// No active item to add a crib into
@@ -219,33 +232,58 @@ public class Crib_Reader implements EntryPoint {
 				
 				if ("cribAdd" == cribButton.getElement().getId()) {
 					
-					// Crib Add button pressed
-					String aCribName = cribName.getText().trim();
-					if (aCribName != null) {
+					final String aCribName = cribName.getText().trim();
 					
-						items.saveActiveCribContent(cribContent.getText());
+					// Save Active Crib before adding one
+					if ( activeCrib != null ) {
+						activeCrib.setCribContext(cribContent.getText());	
+					}
+					
+					// Crib Add button pressed
+					if ( !(aCribName.equals(null)) && !(aCribName.equals("")) ) {
+					
+						//item.cribList.get(cribIndex).setCribContext(content);
 						
-						cribName.setText("");
-						cribContent.setText("");
+						items.addCribToActiveItem(aCribName, activeItem);
 						
-						cribList.addItem(aCribName);
-						cribList.setSelectedIndex(cribList.getItemCount()-1);
-						cribList.setFocus(true);
-						
-						items.addCribToActiveItem(aCribName);
+						cribServer.putItem(activeItem, new AsyncCallback<Void>() {
+							
+							public void onFailure(Throwable caught) { }
+							public void onSuccess(Void result) {
+								
+								cribName.setText("");
+								cribContent.setText("");
+								cribList.addItem(aCribName);
+								cribList.setSelectedIndex(cribList.getItemCount()-1);
+								cribList.setFocus(true);
+								
+							}
+						});
 					}
 					
 				} else if ("cribRemove" == cribButton.getElement().getId()) {
 					
 					// Crib Remove button pressed
-					int cribIndex = cribList.getSelectedIndex();
-					cribList.removeItem(cribIndex);
-					cribContent.setText("");
+					if ( activeCrib != null ) {
 					
-					items.removeCribFromActiveItem(cribIndex);
+						activeItem.cribList.remove(activeCrib);
+						
+						cribServer.putItem(activeItem, new AsyncCallback<Void>() {
+						
+								public void onFailure(Throwable caught) { }
+								public void onSuccess(Void result) {
+								int cribIndex = cribList.getSelectedIndex();
+								cribList.removeItem(cribIndex);
+								cribContent.setText("");
+								items.setActiveCrib(null);
+							}
+						});
+						
+					}
 				}
 				
-				// Save Item to the Datastore
+				// TODO Update Existing Item
+				
 				cribServer.putItem(activeItem, new AsyncCallback<Void>() {
 					
 					public void onFailure(Throwable caught) {}
@@ -263,9 +301,17 @@ public class Crib_Reader implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				
 				// Save Crib Content
-				final Item activeItem = items.getActiveItem();
+				Item activeItem = items.getActiveItem();
+				Crib activeCrib = items.getActiveCrib();
+				
 				if (activeItem != null) {
-					items.saveActiveCribContent(cribContent.getText());
+					
+					// Save Active Crib before changing it
+					if ( activeCrib != null ) {
+						activeCrib.setCribContext(cribContent.getText());	
+					}
+					
+					// TODO Update Existing Item
 					cribServer.putItem(activeItem, new AsyncCallback<Void>() {
 						
 						public void onFailure(Throwable caught) {}
@@ -295,21 +341,31 @@ public class Crib_Reader implements EntryPoint {
 			public void onChange(ChangeEvent event) {
 				
 				// User has change selected index
-				final Item activeItem = items.getActiveItem();
+				Item activeItem = items.getActiveItem();
+				Crib activeCrib = items.getActiveCrib();
+				
 				if (activeItem != null) {
-					items.saveActiveCribContent(cribContent.getText());
+					
+					// Save Active Crib before Changing It
+					if ( activeCrib != null ) {
+						activeCrib.setCribContext(cribContent.getText());	
+					}
+					
+					int cribIndex = cribList.getSelectedIndex();
+					final Crib selectedCrib = activeItem.getCribList().get(cribIndex);
+					
+					// TODO Update Existing Item
 					cribServer.putItem(activeItem, new AsyncCallback<Void>() {
 						
 						public void onFailure(Throwable caught) {}
-						public void onSuccess(Void result) {}
+						public void onSuccess(Void result) {
+							
+							items.setActiveCrib(selectedCrib);
+							cribContent.setText(selectedCrib.getCribContext());
+						}
 						
 					});
 				}
-				
-				int cribIndex = cribList.getSelectedIndex();
-				Crib selectedCrib = activeItem.getCribList().get(cribIndex);
-				items.setActiveCrib(selectedCrib);
-				cribContent.setText(selectedCrib.getCribContext());
 			}
 		});
 		

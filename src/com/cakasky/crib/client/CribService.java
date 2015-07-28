@@ -16,5 +16,6 @@ public interface CribService extends RemoteService {
 	List<Item>getBooks();
 	List<Item>getStories();
 	void putItem(Item item);
+	void updateItem(Item item);
 
 }

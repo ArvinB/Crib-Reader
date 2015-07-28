@@ -66,33 +66,15 @@ public class ItemController implements Serializable {
 		return story;
 	}
 	
-	public Crib addCribToActiveItem(String cribName) {
+	public Crib addCribToActiveItem(String cribName, Item item) {
 		
 		Crib crib = new Crib();
 		crib.setCribName(cribName);
 		
-		Item item = getActiveItem();
-		item.addCrib(crib);
+		item.cribList.add(crib);
 		setActiveCrib(crib);
 		
 		return crib;
-	}
-	
-	public void saveActiveCribContent(String content) {
-		
-		Crib crib = getActiveCrib();
-		if ( crib != null )
-			crib.setCribContext(content);
-			
-	}
-	
-	public void removeCribFromActiveItem(int cribIndex) {
-				
-		Item item = getActiveItem();
-		if ( item != null ) {
-			setActiveCrib(null);
-			item.removeCrib(cribIndex);
-		}
 	}
 	
 	public ArrayList<Item> getBookItems() {

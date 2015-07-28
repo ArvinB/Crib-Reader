@@ -45,7 +45,7 @@ public class Item implements Serializable {
 	@Unindex private String itemName;
 	
 	@Serialize
-	private ArrayList<Crib> cribList = new ArrayList<Crib>();
+	public ArrayList<Crib> cribList = new ArrayList<Crib>();
 	
 	// Default Constructor
 	public Item() {
